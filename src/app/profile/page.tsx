@@ -16,6 +16,17 @@ const Profile = () => {
       }
 
   }
+
+
+  const getUserDetails = async () => {
+    try {
+      const res = await axios.get("/api/users/me");
+      console.log("user details",res.data);
+      router.push(`/profile/${res.data.data._id}`);
+    } catch (error:any) {
+      console.log("error",error.message);
+    }
+  }
   return (
     <div className='flex items-center flex-col justify-center min-h-screen '>
       <h1>Profile</h1>
@@ -23,6 +34,7 @@ const Profile = () => {
       onClick={onLogout}
       className='bg-none hover:bg-slate-300 hover:text-black hover:border-none border my-6 border-slate-50 rounded-lg px-3 py-2'
       >Logout</button>
+      <button onClick={getUserDetails} className='text-black bg-slate-200 px-2 py-2 rounded-lg'>Get my details</button>
     </div>
   )
 }
