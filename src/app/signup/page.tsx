@@ -18,16 +18,17 @@ const SignUp = () => {
     password: "",
   });
 
-  const onSignUp = async () => {
+  const onSignUp = async (e: any) => {
+    e.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      console.log("Sign up response", response);
-      router.push("/");
-    } catch (error:any) {
+      console.log("Sign up response", response.data);
+      router.push("/login");
+    } catch (error: any) {
       console.log("Sign up error", error.message);
-      toast.error("SignUp failed, Please try again.")
-    }finally{
+      toast.error("SignUp failed, Please try again.");
+    } finally {
       setLoading(false);
     }
   };
@@ -56,7 +57,7 @@ const SignUp = () => {
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
             alt="logo"
           />
-          Flowbite
+          Next.Js Authentication
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -129,7 +130,7 @@ const SignUp = () => {
               {loading && (
                 <div className="flex items-center justify-center text-green-400 font-semibold">
                   <p>Wait, we are making your account.</p>
-                  <span className="animate-spin h-10 w-10 bg-none border-b-2 border-green-700 rounded-full mx-3 "/>
+                  <span className="animate-spin h-10 w-10 bg-none border-b-2 border-green-700 rounded-full mx-3 " />
                 </div>
               )}
 

@@ -3,9 +3,9 @@ import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 
-dbConnect();
 export async function POST(request: NextRequest) {
   try {
+    await dbConnect();
     const reqBody = await request.json();
     const { username, email, password } = reqBody;
     console.log("Request Body:", reqBody);
