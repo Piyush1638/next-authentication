@@ -22,13 +22,22 @@ const userSchema = new mongoose.Schema({
     forgotPasswordTokenExpiry : Date,
     verifyToken : String,
     verifyTokenExpiry: Date,
-    
+    bio:{
+        type: String,
+        default: ""
+    },
     savedPosts: {
-        type: [String],
+        type: [{
+            pid: String,
+            type: String
+        }],
         default: []
     },
     myPosts: {
-        type: [String],
+        type: [{
+            pid: String,
+            type: String
+        }],
         default: []
     },
     reputation: {

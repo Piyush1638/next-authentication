@@ -37,6 +37,14 @@ router.post("/:uid", async (req, res) => {
         }
         const newRepo = new Repo(repo);
         await newRepo.save();
+        const obj = {
+            pid: newRepo._id,
+            type: "REPO"
+        }
+        const updatedUser = await User.findByIdAndUpdate(uid,
+            {
+                $push: {myPosts: obj}
+            },{new: true});
         res.status(201).json(newRepo);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -96,6 +104,34 @@ router.patch("/:pid/addcomment/:uid",async (req,res)=>{
     catch(err)
     {
         res.status(500).json({message: err.message});
+    }
+})
+
+// save repos
+router.patch("/:pid/save/:uid", async(req,res)=>{
+    try{
+        const pid = req.params.pid;
+        const uid = req.params.uid;
+        const repo = await Repo.findById(pid);
+        if (!repo) {
+            return res.status(404).json({ message: "Repo not found." });
+        }
+        const user = await User.findById(uid);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        const obj = {
+            pid: pid,
+            type: "REPO"
+        }
+        const updateUser = await User.findByIdAndUpdate(uid,{
+            $push: {savedPosts: obj}
+        },{new: true});
+        res.status(201).json({message: "Successfully saved the post", data: updateUser});
+    }
+    catch(err)
+    {
+        res.status(500).json({message: err.message});   
     }
 })
 

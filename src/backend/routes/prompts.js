@@ -34,6 +34,14 @@ router.post('/:uid', async (req, res) => {
         }
         const newPrompt = new Prompt(prompt);
         await newPrompt.save();
+        const obj = {
+            pid: newPrompt._id,
+            type: "PROMPT"
+        }
+        const updatedUser = await User.findByIdAndUpdate(uid,
+            {
+                $push: {myPosts: obj}
+            },{new: true});
         res.status(201).json(newPrompt);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -96,5 +104,32 @@ router.patch("/:pid/addcomment/:uid",async (req,res)=>{
     }
 })
 
+// save prompts
+router.patch("/:pid/save/:uid", async(req,res)=>{
+    try{
+        const pid = req.params.pid;
+        const uid = req.params.uid;
+        const prompt = await Prompt.findById(pid);
+        if (!prompt) {
+            return res.status(404).json({ message: "Prompt not found." });
+        }
+        const user = await User.findById(uid);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        const obj = {
+            pid: pid,
+            type: "PROMPT"
+        }
+        const updateUser = await User.findByIdAndUpdate(uid,{
+            $push: {savedPosts: obj}
+        },{new: true});
+        res.status(201).json({message: "Successfully saved the post", data: updateUser});
+    }
+    catch(err)
+    {
+        res.status(500).json({message: err.message});   
+    }
+})
 
 module.exports = router;

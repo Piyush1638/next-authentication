@@ -36,6 +36,14 @@ router.post('/:uid', async (req, res) => {
         }
         const newPost = new Post(post);
         await newPost.save();
+        const obj = {
+            pid: newPost._id,
+            type: "POST"
+        }
+        const updatedUser = await User.findByIdAndUpdate(uid,
+            {
+                $push: {myPosts:obj}
+            },{new: true});
         res.status(201).json(newPost);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -98,5 +106,32 @@ router.patch("/:pid/addcomment/:uid",async (req,res)=>{
     }
 })
 
+// save posts
+router.patch("/:pid/save/:uid", async(req,res)=>{
+    try{
+        const pid = req.params.pid;
+        const uid = req.params.uid;
+        const post = await Post.findById(pid);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found." });
+        }
+        const user = await User.findById(uid);
+        if (!user) {
+            return res.status(404).json({ message: "User not found." });
+        }
+        const obj = {
+            pid: pid,
+            type: "POST"
+        }
+        const updateUser = await User.findByIdAndUpdate(uid,{
+            $push: {savedPosts: obj}
+        },{new: true});
+        res.status(201).json({message: "Successfully saved the post", data: updateUser});
+    }
+    catch(err)
+    {
+        res.status(500).json({message: err.message});   
+    }
+})
 
 module.exports = router;
