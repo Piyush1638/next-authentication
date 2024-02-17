@@ -1,5 +1,5 @@
 import { getDataFromToken } from "@/helpers/getDataFromToken";
-import User from "@/models/userModel";
+import User from "@/backend/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
