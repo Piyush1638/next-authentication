@@ -25,10 +25,10 @@ router.post("/:uid", async (req, res) => {
         {
             return res.status(404).json({message: "No user found!"});
         }
-        const existingPost = await Repo.findOne({ title: p.title });
-        if (existingPost) {
-            return res.status(409).json({ message: "Post with the same title already exists." });
-        }
+        // var existingPost = await Repo.findOne({ title: p.title });
+        // if (existingPost) {
+        //     return res.status(409).json({ message: "Post with the same title already exists." });
+        // }
         const repo = {
             title: p.title,
             description : p.description,
@@ -43,7 +43,7 @@ router.post("/:uid", async (req, res) => {
         }
         const updatedUser = await User.findByIdAndUpdate(uid,
             {
-                $push: {myPosts: obj}
+                $push: {myPosts:JSON.stringify(obj)}
             },{new: true});
         res.status(201).json(newRepo);
     } catch (error) {
