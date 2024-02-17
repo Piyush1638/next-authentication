@@ -2,6 +2,7 @@ import dbConnect from "@/dbConfig/dbconfig";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
+import { sendEmail } from "@/helpers/mailer";
 
 export async function POST(request: NextRequest) {
   try {
@@ -33,6 +34,10 @@ export async function POST(request: NextRequest) {
       console.error("Failed to create an account");
       throw Error("Failed to create an account");
     }
+
+    // Send Email for verification
+
+    await sendEmail({email, emailType: "VERIFY", userId: savedUser._id})
 
     console.log("Account created successfully:", savedUser);
 

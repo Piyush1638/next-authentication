@@ -99,7 +99,7 @@ const Login = () => {
               {loading && (
                 <div className="flex items-center justify-center text-green-400 font-semibold">
                   <p>Wait, we are logging you in.</p>
-                  <span className="animate-spin h-10 w-10 bg-none border-b-2 border-green-700 rounded-full mx-3 " />
+                  <span className="animate-spin h-10 w-10 bg-none border-b-2 border-r-2 border-r-pink-500 border-orange-600 rounded-full mx-3 " />
                 </div>
               )}
 
