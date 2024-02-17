@@ -5,7 +5,7 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
   
-  const isPublicPath = path === '/login' || path === '/signup';
+  const isPublicPath = path === '/login' || path === '/signup'|| path === '/verifyemail';
   
 // It might be possible that cookie is not present then in that case it should be ""
   const token = request.cookies.get('token')?.value || '';
@@ -26,6 +26,7 @@ export const config = {
     '/',
     '/signup',
     '/profile',
-    '/profile/:path*'
+    '/profile/:path*',
+    '/verifyemail',
   ]
 }
