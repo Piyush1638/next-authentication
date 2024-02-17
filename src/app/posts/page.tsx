@@ -19,7 +19,7 @@ const page = () => {
         <div className="flex flex-col relative justify-center h-full w-full gap-3">
             <h3 className="text-[#DCCDB0] text-4xl font-bold">Explore Posts</h3>
             <div className="border border-[#DCCDB0] flex items-center rounded-full px-3 py-3 w-4/5 shadow-[#DCCDB0] shadow-sm">
-                <input type="text" placeholder="Search..." className="bg-transparent outline-none w-full text-slate-50 " />
+                <input type="text" placeholder="Search by hastag or title" className="bg-transparent outline-none w-full text-slate-50 " />
                 <CiSearch className="text-[#DCCDB0] mx-3 text-3xl"/>
             </div>
             <div className="flex items-center flex-row gap-4 mt-4">

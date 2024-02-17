@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <nav className="w-full flex items-center justify-between px-3 py-2 bg-gray-800 fixed top-0">
+    <nav className="w-full flex items-center justify-between px-3 py-2 fixed top-0">
       <div className="flex justify-left title-gradient items-center p-4 text-4xl font-bold">
         <h1>UnZip</h1>
       </div>

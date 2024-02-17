@@ -1,5 +1,5 @@
 import dbConnect from "@/dbConfig/dbconfig";
-import User from "../../../../backend/models/userModel";
+import User from "@/backend/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 import { sendEmail } from "@/helpers/mailer";
