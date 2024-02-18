@@ -15,19 +15,20 @@ const page = () => {
   const [postContent, setPostContent] = useState("");
   const [repoLink, setRepoLink] = useState("");
   const [promptPost, setPromptPost] = useState("");
-  const [hastags, setHastags] = useState("");
+  const [hashtags, setHashtags] = useState("");
   const [uid, setUid] = useState("");
 
   const uploadPost = async () => {
     // Assuming hastags is a string with space-separated hashtags
-    const hashtagsArray = hastags.split(" ");
+    const hashtagsArray = hashtags.split(" ");
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/posts/${uid}`,
+        "/api/users/post",
         {
           title: title,
           description: postContent,
           hashtags: hashtagsArray,
+          uid: uid,
         }
       );
       console.log(response.data);
@@ -37,15 +38,16 @@ const page = () => {
   };
 
   const uploadPrompt = async () => {
-    const hashtagsArray = hastags.split(" ");
+    const hashtagsArray = hashtags.split(" ");
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/prompts/${uid}`,
+        "/api/users/prompt",
         {
           title: title,
-          description: description,
+          description: description,  // Corrected this line
           prompt: promptPost,
           hashtags: hashtagsArray,
+          uid: uid,
         }
       );
       console.log(response.data);
@@ -53,16 +55,21 @@ const page = () => {
       console.log(error.message);
     }
   };
+  
+
+
+
   const uploadRepo = async () => {
-    const hashtagsArray = hastags.split(" ");
+    const hashtagsArray = hashtags.split(" ");
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/repos/${uid}`,
+        "/api/users/repo",
         {
           title: title,
           description: description,
-          repo: "repo",
           hashtags: hashtagsArray,
+          uid: uid,
+          repoLink: repoLink,
         }
       );
       console.log(response.data);
@@ -169,8 +176,8 @@ const page = () => {
                 rows={3}
                 name="hastags"
                 id="hastags"
-                value={hastags}
-                onChange={(e) => setHastags(e.target.value)}
+                value={hashtags}
+                onChange={(e) => setHashtags(e.target.value)}
                 placeholder="Hastags are space seperated"
                 className="bg-transparent outline-none w-full"
               />
@@ -190,6 +197,10 @@ const page = () => {
             <button
               onClick={() => {
                 setPost(false);
+                setTitle("");
+                setPostContent("");
+                setHashtags("");
+                setDescription("")
                 setPrompt(false);
                 setRepo(false);
               }}
@@ -270,18 +281,32 @@ const page = () => {
                 rows={3}
                 name="hastags"
                 id="hastags"
-                value={hastags}
-                onChange={(e) => setHastags(e.target.value)}
+                value={hashtags}
+                onChange={(e) => setHashtags(e.target.value)}
                 placeholder="Hastags are seperated by comma..."
                 className="bg-transparent outline-none w-full"
               />
             </div>
           </div>
 
+
+          <div className="flex justify-end">
+            <button
+              onClick={uploadPrompt}
+              className="bg-gray-800 text-slate-50 px-3 py-2 rounded-full"
+            >
+              Post
+            </button>
+          </div>
+
           <div className="flex justify-end">
             <button
               onClick={() => {
                 setPost(false);
+                setTitle("");
+                setPostContent("");
+                setHashtags("");
+                setDescription("")
                 setPrompt(false);
                 setRepo(false);
               }}
@@ -361,8 +386,8 @@ const page = () => {
                 rows={3}
                 name="hastags"
                 id="hastags"
-                value={hastags}
-                onChange={(e) => setHastags(e.target.value)}
+                value={hashtags}
+                onChange={(e) => setHashtags(e.target.value)}
                 placeholder="Hastags are seperated by comma..."
                 className="bg-transparent outline-none w-full"
               />
@@ -371,8 +396,21 @@ const page = () => {
 
           <div className="flex justify-end">
             <button
+              onClick={uploadRepo}
+              className="bg-gray-800 text-slate-50 px-3 py-2 rounded-full"
+            >
+              Post
+            </button>
+          </div>
+
+          <div className="flex justify-end">
+            <button
               onClick={() => {
                 setPost(false);
+                setTitle("");
+                setPostContent("");
+                setHashtags("");
+                setDescription("")
                 setPrompt(false);
                 setRepo(false);
               }}
